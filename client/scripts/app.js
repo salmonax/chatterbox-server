@@ -31,7 +31,7 @@ var app = {
     // Poll for new messages
     // setInterval(function() {
     //   app.fetch(true);
-    // }, 3000);
+    // }, 1000);
   },
 
   send: function(message) {
@@ -63,7 +63,12 @@ var app = {
       contentType: 'application/json',
       success: function(data) {
         // Don't bother if we have nothing to work with
-        if (!data.results || !data.results.length) { return; }
+        if (!data.results || !data.results.length) { 
+          console.log("FETCH EMPTY, RETURNING");
+          return; 
+        }
+
+        console.log("CALLED SUCCESS ON FETCH");
 
         // Store messages for caching later
         app.messages = data.results;
@@ -81,7 +86,9 @@ var app = {
 
           // Store the ID of the most recent message
           app.lastMessageId = mostRecentMessage.objectId;
+          console.log("RAN ROOM LIST LOGIC");
         }
+
       },
       error: function(error) {
         console.error('chatterbox: Failed to fetch messages', error);

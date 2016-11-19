@@ -12,7 +12,18 @@ this file and include it in basic-server.js so that it actually works.
 
 **************************************************************/
 //export file 
-var messages = [];
+var messages = [
+  {
+    username: 'Sam',
+    message: 'Do my bidding!',
+    roomname: 'lobby'
+  },
+  {
+    username: 'Blob',
+    message: 'Gurgle urgle burble',
+    roomname: 'ocean'
+  }
+];
 
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module.
@@ -71,10 +82,10 @@ var requestHandler = function(request, response) {
   //
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  if (request.url === '/classes/messages' || request.url === '/classes/messages/?order=-createdAt' || request.url === '/classes/room') {
-    
+  if (request.url === '/classes/messages/' || request.url === '/classes/messages/?order=-createdAt' || request.url === '/classes/room') {
+
     if (request.method === 'OPTIONS') {
-      console.log("GOT OPTIONS");
+      console.log('GOT OPTIONS');
       response.writeHead(statusCode, headers);
       response.end();
     }
@@ -95,7 +106,7 @@ var requestHandler = function(request, response) {
         messages.push(JSON.parse(body));
       
       }); 
-      response.end();
+      response.end(JSON.stringify({results: messages }) );
     }
   } else {
     response.writeHead(404, headers);
