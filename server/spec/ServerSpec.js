@@ -1,4 +1,5 @@
-var handler = require('../request-handler');
+var handler = {};
+handler.requestHandler = require('../request-handler');
 var expect = require('chai').expect;
 var stubs = require('./Stubs');
 
@@ -61,7 +62,7 @@ describe('Node Server Request Listener Function', function() {
       username: 'Jono',
       message: 'Do my bidding!'
     };
-    var req = new stubs.request('/classes/messages', 'POST', stubMsg);
+    var req = new stubs.request('/classes/room', 'POST', stubMsg);
     var res = new stubs.response();
 
     handler.requestHandler(req, res);
@@ -71,7 +72,7 @@ describe('Node Server Request Listener Function', function() {
 
     // Testing for a newline isn't a valid test
     // TODO: Replace with with a valid test
-    // expect(res._data).to.equal(JSON.stringify('\n'));
+    expect(res._data).to.equal(JSON.stringify('\n'));
     expect(res._ended).to.equal(true);
   });
 

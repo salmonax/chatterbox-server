@@ -87,10 +87,10 @@ var requestHandler = function(request, response) {
       });
 
       request.on('end', function () {
-        var post = body;
         messages.push(JSON.parse(body));
-        response.end(post);
+      
       }); 
+      response.end();
     }
   } else {
     response.writeHead(404, headers);
