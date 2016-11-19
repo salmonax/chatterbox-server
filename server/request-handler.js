@@ -72,13 +72,18 @@ var requestHandler = function(request, response) {
   // node to actually send all the data over to the client.
   if (request.url === '/classes/messages') {
 
-    response.writeHead(statusCode, headers);
     if (request.method === 'GET') {
+      response.writeHead(statusCode, headers);
       response.end( JSON.stringify({results: []}) );
     }
     if (request.method === 'POST') {
-      console.log('post msg heres');
+
+      // Current cannot access the user's post body
+
+      response.writeHead(201, headers);
+      response.end();
     }
+
   } else {
     response.writeHead(404, headers);
     response.end('Error: Not Found');
