@@ -71,8 +71,13 @@ var requestHandler = function(request, response) {
   //
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  if (request.url === '/classes/messages' || request.url === '/classes/room') {
-
+  if (request.url === '/classes/messages' || request.url === '/classes/messages/?order=-createdAt' || request.url === '/classes/room') {
+    
+    if (request.method === 'OPTIONS') {
+      console.log("GOT OPTIONS");
+      response.writeHead(statusCode, headers);
+      response.end();
+    }
     if (request.method === 'GET') {
       response.writeHead(statusCode, headers);
       console.log('message : ', messages);
@@ -96,6 +101,7 @@ var requestHandler = function(request, response) {
     response.writeHead(404, headers);
     response.end('Error: Not Found');
   }
+
 };
 
 //since requestHandler not in {}, exporting the fn -not results
