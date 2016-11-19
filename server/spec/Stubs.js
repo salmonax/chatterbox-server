@@ -27,6 +27,7 @@ module.exports = {
     // This is how you collect and send back information on a request
     this.addListener = this.on = function(type, callback) {
       if (type === 'data') {
+        // console.log('POSTDATA ', this._postData);
         callback(JSON.stringify(this._postData));
       }
 

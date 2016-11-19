@@ -71,7 +71,7 @@ var requestHandler = function(request, response) {
   //
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  if (request.url === '/classes/messages') {
+  if (request.url === '/classes/messages' || request.url === '/classes/room') {
 
     if (request.method === 'GET') {
       response.writeHead(statusCode, headers);
