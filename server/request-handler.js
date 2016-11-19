@@ -12,6 +12,7 @@ this file and include it in basic-server.js so that it actually works.
 
 **************************************************************/
 //export file 
+var messages = [];
 
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module.
@@ -74,21 +75,28 @@ var requestHandler = function(request, response) {
 
     if (request.method === 'GET') {
       response.writeHead(statusCode, headers);
-      response.end( JSON.stringify({results: []}) );
+      console.log('message : ', messages);
+      response.end( JSON.stringify({results: messages }) );
     }
     if (request.method === 'POST') {
-
-      // Current cannot access the user's post body
-
+      var body = '';
       response.writeHead(201, headers);
-      response.end();
-    }
 
+      request.on('data', function (data) {
+        body += data;
+      });
+
+      request.on('end', function () {
+        var post = body;
+        messages.push(JSON.parse(body));
+        response.end(post);
+      }); 
+    }
   } else {
     response.writeHead(404, headers);
     response.end('Error: Not Found');
   }
 };
 
-//since not in {}, exporting the fn -not results
+//since requestHandler not in {}, exporting the fn -not results
 module.exports = requestHandler;
