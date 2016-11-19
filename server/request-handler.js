@@ -71,7 +71,7 @@ var requestHandler = function(request, response) {
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
   if (request.url === '/classes/messages') {
-    
+
     response.writeHead(statusCode, headers);
     if (request.method === 'GET') {
       response.end( JSON.stringify({results: []}) );
@@ -80,9 +80,8 @@ var requestHandler = function(request, response) {
       console.log('post msg heres');
     }
   } else {
-
     response.writeHead(404, headers);
-
+    response.end('Error: Not Found');
   }
 };
 
